@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -103,6 +103,7 @@ public partial class GeneralSettingsPage : SettingsPageBase
     private void GeneralSettingsPage_OnLoaded(object sender, RoutedEventArgs e)
     {
         SettingsService.Settings.PropertyChanged += SettingsOnPropertyChanged;
+        ViewModel.RefreshMicrophoneDevices();
     }
 
     private void GeneralSettingsPage_OnUnloaded(object sender, RoutedEventArgs e)

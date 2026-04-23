@@ -151,6 +151,9 @@ public class Settings : ObservableRecipient, ILessonControlSettings, INotificati
     private bool _isTimeAutoAdjustEnabled = false;
     private double _timeAutoAdjustSeconds = 0.0;
     private DateTime _lastTimeAdjustDateTime = DateTime.Now;
+    private bool _isTimeAutoAlignEnabled = false;
+    private int _selectedMicrophoneDeviceIndex = 0;
+    private string _timeAutoAlignRecordedOffsets = "";
     private bool _isNotificationTopmostEnabled = true;
     private double _notificationEffectRenderingScale = 1.0;
     private bool _isNotificationEffectRenderingScaleAutoSet = false;
@@ -752,6 +755,39 @@ public class Settings : ObservableRecipient, ILessonControlSettings, INotificati
         {
             if (value.Equals(_lastTimeAdjustDateTime)) return;
             _lastTimeAdjustDateTime = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsTimeAutoAlignEnabled
+    {
+        get => _isTimeAutoAlignEnabled;
+        set
+        {
+            if (value == _isTimeAutoAlignEnabled) return;
+            _isTimeAutoAlignEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int SelectedMicrophoneDeviceIndex
+    {
+        get => _selectedMicrophoneDeviceIndex;
+        set
+        {
+            if (value == _selectedMicrophoneDeviceIndex) return;
+            _selectedMicrophoneDeviceIndex = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string TimeAutoAlignRecordedOffsets
+    {
+        get => _timeAutoAlignRecordedOffsets;
+        set
+        {
+            if (value == _timeAutoAlignRecordedOffsets) return;
+            _timeAutoAlignRecordedOffsets = value;
             OnPropertyChanged();
         }
     }

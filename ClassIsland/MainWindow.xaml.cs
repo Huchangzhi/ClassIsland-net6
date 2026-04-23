@@ -202,6 +202,19 @@ public partial class MainWindow : Window
         InitializeComponent();
         RulesetService.StatusUpdated += RulesetServiceOnStatusUpdated;
         TouchInFadingTimer.Tick += TouchInFadingTimerOnTick;
+        
+        // 自动时间对齐 - 每次主计时器触发时检查是否需要开始录音
+        var timeAutoAlignService = App.GetService<TimeAutoAlignService>();
+        if (timeAutoAlignService != null)
+        {
+            LessonsService.PreMainTimerTicked += (s, e) => timeAutoAlignService.CheckAndStartRecording();
+            
+            var audioCaptureService = App.GetService<AudioCaptureService>();
+            if (audioCaptureService != null)
+            {
+                audioCaptureService.RecordingComplete += timeAutoAlignService.OnRecordingComplete;
+            }
+        }
         IsRunningCompatibleMode = SettingsService.Settings.IsCompatibleWindowTransparentEnabled;
         if (IsRunningCompatibleMode)
         {

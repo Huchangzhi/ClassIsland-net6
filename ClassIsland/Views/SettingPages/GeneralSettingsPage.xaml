@@ -1,4 +1,4 @@
-﻿<controls:SettingsPageBase x:Class="ClassIsland.Views.SettingPages.GeneralSettingsPage"
+<controls:SettingsPageBase x:Class="ClassIsland.Views.SettingPages.GeneralSettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -355,6 +355,21 @@
                                                                      IsEnabled="{Binding SettingsService.Settings.IsTimeAutoAdjustEnabled}"
                                                                      Text="{Binding SettingsService.Settings.TimeAutoAdjustSeconds, Converter={StaticResource IntToStringConverter}}"
                                                                      materialDesign:TextFieldAssist.SuffixText="秒"/>
+                                </DockPanel>
+                            </controls1:SettingsControl.Switcher>
+                        </controls1:SettingsControl>
+                        <!-- 自动时间对齐（实验性） -->
+                        <controls1:SettingsControl IconGlyph="MicrophoneOutline" Header="自动时间对齐（实验性）"
+                                                                       Description="当下课前10秒时自动监听麦克风，识别铃声并校准时间偏移。需要在同一天内识别3次相近的偏移值才会生效。">
+                            <controls1:SettingsControl.Switcher>
+                                <DockPanel Width="200">
+                                    <ToggleButton DockPanel.Dock="Right"
+                                                                          Margin="8 0 0 0"
+                                                                          IsChecked="{Binding SettingsService.Settings.IsTimeAutoAlignEnabled}"/>
+                                    <ComboBox Foreground="{DynamicResource MaterialDesignBody}"
+                                                                      IsEnabled="{Binding SettingsService.Settings.IsTimeAutoAlignEnabled}"
+                                                                      SelectedIndex="{Binding SettingsService.Settings.SelectedMicrophoneDeviceIndex}"
+                                                                      ItemsSource="{Binding ViewModel.MicrophoneDevices}"/>
                                 </DockPanel>
                             </controls1:SettingsControl.Switcher>
                         </controls1:SettingsControl>

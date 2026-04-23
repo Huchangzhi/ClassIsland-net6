@@ -515,6 +515,8 @@ public partial class App : AppBase, IAppHost
                     }
                 }));
                 services.AddSingleton<IExactTimeService, ExactTimeService>();
+                services.AddSingleton<AudioCaptureService>();
+                services.AddSingleton<TimeAutoAlignService>();
                 //services.AddSingleton(typeof(ApplicationCommand), ApplicationCommand);
                 services.AddSingleton<IProfileAnalyzeService, ProfileAnalyzeService>();
                 services.AddSingleton<IIpcService, IpcService>();
