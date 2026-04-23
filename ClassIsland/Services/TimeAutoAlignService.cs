@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
-using ClassIsland.Shared.Abstraction.Services;
+using ClassIsland.Core.Abstractions.Services;
 
 namespace ClassIsland.Services;
 
@@ -11,7 +11,7 @@ public class TimeAutoAlignService : ObservableRecipient, IDisposable
 {
     private readonly ILogger<TimeAutoAlignService> _logger;
     private readonly SettingsService _settingsService;
-    private readonly IExactTimeService _exactTimeService;
+    private readonly ExactTimeService _exactTimeService;
     private readonly AudioCaptureService _audioCaptureService;
     private bool _isListening;
     private DateTime _lastClassEndTime;
