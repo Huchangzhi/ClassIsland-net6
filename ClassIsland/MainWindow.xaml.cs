@@ -212,7 +212,7 @@ public partial class MainWindow : Window
             var audioCaptureService = App.GetService<AudioCaptureService>();
             if (audioCaptureService != null)
             {
-                audioCaptureService.RecordingComplete += timeAutoAlignService.OnRecordingComplete;
+                audioCaptureService.RecordingComplete += (s, time) => timeAutoAlignService.OnRecordingComplete(time);
             }
         }
         IsRunningCompatibleMode = SettingsService.Settings.IsCompatibleWindowTransparentEnabled;

@@ -39,10 +39,8 @@ public class GeneralSettingsViewModel : ObservableRecipient
             for (int i = 0; i < WaveInEvent.DeviceCount; i++)
             {
                 var capabilities = WaveInEvent.GetCapabilities(i);
-                if (capabilities.SupportsRecording)
-                {
-                    MicrophoneDevices.Add(capabilities.ProductName);
-                }
+                // .NET 6 不支持 SupportsRecording，直接添加
+                MicrophoneDevices.Add(capabilities.ProductName);
             }
         }
         catch

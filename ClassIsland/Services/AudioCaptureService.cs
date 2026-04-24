@@ -46,12 +46,7 @@ public class AudioCaptureService : IDisposable
             }
 
             var capabilities = WaveInEvent.GetCapabilities(deviceIndex);
-            if (!capabilities.SupportsRecording)
-            {
-                _logger.LogWarning("设备不支持录音: {Device}", capabilities.ProductName);
-                return;
-            }
-
+            // .NET 6 不支持 SupportsRecording，直接使用
             _maxVolume = 0;
             _maxVolumeTime = DateTime.MinValue;
             _cancellationTokenSource = new CancellationTokenSource();

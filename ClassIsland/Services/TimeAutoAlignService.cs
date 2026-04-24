@@ -11,7 +11,7 @@ public class TimeAutoAlignService : ObservableRecipient, IDisposable
 {
     private readonly ILogger<TimeAutoAlignService> _logger;
     private readonly SettingsService _settingsService;
-    private readonly ExactTimeService _exactTimeService;
+    private readonly IExactTimeService _exactTimeService;
     private readonly AudioCaptureService _audioCaptureService;
     private bool _isListening;
     private DateTime _lastClassEndTime;
@@ -26,7 +26,7 @@ public class TimeAutoAlignService : ObservableRecipient, IDisposable
     {
         _logger = logger;
         _settingsService = settingsService;
-        _exactTimeService = exactTimeService;
+        _exactTimeService = (ExactTimeService)exactTimeService;
         _audioCaptureService = audioCaptureService;
 
         _settingsService.Settings.PropertyChanged += OnSettingsPropertyChanged;
