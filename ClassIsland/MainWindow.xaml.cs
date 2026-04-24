@@ -207,12 +207,32 @@ public partial class MainWindow : Window
         var timeAutoAlignService = App.GetService<TimeAutoAlignService>();
         if (timeAutoAlignService != null)
         {
-            LessonsService.PreMainTimerTicked += (s, e) => timeAutoAlignService.CheckAndStartRecording();
+            LessonsService.PreMainTimerTicked += (s, e) =>
+            {
+                if (Dispatcher.CheckAccess())
+                {
+                    timeAutoAlignService.CheckAndStartRecording();
+                }
+                else
+                {
+                    Dispatcher.BeginInvoke(() => timeAutoAlignService.CheckAndStartRecording());
+                }
+            };
             
             var audioCaptureService = App.GetService<AudioCaptureService>();
             if (audioCaptureService != null)
             {
-                audioCaptureService.RecordingComplete += (s, time) => timeAutoAlignService.OnRecordingComplete(time);
+                audioCaptureService.RecordingComplete += (s, time) =>
+                {
+                    if (Dispatcher.CheckAccess())
+                    {
+                        timeAutoAlignService.OnRecordingComplete(time);
+                    }
+                    else
+                    {
+                        Dispatcher.BeginInvoke(() => timeAutoAlignService.OnRecordingComplete(time));
+                    }
+                };
             }
         }
         IsRunningCompatibleMode = SettingsService.Settings.IsCompatibleWindowTransparentEnabled;
