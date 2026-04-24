@@ -209,14 +209,18 @@ public partial class MainWindow : Window
         {
             LessonsService.PreMainTimerTicked += (s, e) =>
             {
-                if (Dispatcher.CheckAccess())
+                try
                 {
-                    timeAutoAlignService.CheckAndStartRecording();
+                    if (Dispatcher.CheckAccess())
+                    {
+                        timeAutoAlignService.CheckAndStartRecording();
+                    }
+                    else
+                    {
+                        Dispatcher.BeginInvoke(() => timeAutoAlignService.CheckAndStartRecording());
+                    }
                 }
-                else
-                {
-                    Dispatcher.BeginInvoke(() => timeAutoAlignService.CheckAndStartRecording());
-                }
+                catch { }
             };
             
             var audioCaptureService = App.GetService<AudioCaptureService>();
@@ -224,14 +228,18 @@ public partial class MainWindow : Window
             {
                 audioCaptureService.RecordingComplete += (s, time) =>
                 {
-                    if (Dispatcher.CheckAccess())
+                    try
                     {
-                        timeAutoAlignService.OnRecordingComplete(time);
+                        if (Dispatcher.CheckAccess())
+                        {
+                            timeAutoAlignService.OnRecordingComplete(time);
+                        }
+                        else
+                        {
+                            Dispatcher.BeginInvoke(() => timeAutoAlignService.OnRecordingComplete(time));
+                        }
                     }
-                    else
-                    {
-                        Dispatcher.BeginInvoke(() => timeAutoAlignService.OnRecordingComplete(time));
-                    }
+                    catch { }
                 };
             }
         }
